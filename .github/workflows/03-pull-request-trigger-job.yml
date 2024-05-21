@@ -3,19 +3,31 @@ name: Manually trigger an Azure Machine Learning job
 on: [pull_request]
 
 jobs:
-  train:
+ job1:
+    name: linting
     runs-on: ubuntu-latest
     steps:
     - name: Check out repo
       uses: actions/checkout@main
-    - name: Install az ml extension
-      run: az extension add -n ml -y
-    - name: Azure login
-      uses: azure/login@v1
+    - name: Use Python version 3.8
+      uses: actions/setup-python@v3
       with:
-        creds: ${{secrets.AZURE_CREDENTIALS}}
-    - name: run code checks
+        python-version: '3.8'
+    - name: Install Flake8
       run: |
-        echo "Will add code checks here in next challenge"
+        python -m pip install flake8
+    - name: Run linting tests
+      run: | 
+        flake8 src/model/
+ job2:
+    name: unit-tests
+    runs-on: ubuntu-latest
+    steps:
+    - name: install pytest
+      run: |
+        pip install -f requirements.txt
+    - name: run unit tests
+      run: | 
+        pytest tests/
 
 
