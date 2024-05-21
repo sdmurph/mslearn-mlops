@@ -1,7 +1,6 @@
 name: Manually trigger an Azure Machine Learning job
 
-on:
-  [pull_request]:
+on: [pull_request]
 
 jobs:
   train:
