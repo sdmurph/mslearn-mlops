@@ -22,7 +22,7 @@ def main(args):
     X_train, X_test, y_train, y_test = split_data(df)
 
     # start logging
-    with mlflow.start_run():    
+    with mlflow.start_run():
         # train model
         train_model(args.reg_rate, X_train, X_test, y_train, y_test)
 
@@ -38,10 +38,12 @@ def get_csvs_df(path):
 
 # TO DO: add function to split data
 def split_data(df):
-    X, y = df[['Pregnancies','PlasmaGlucose','DiastolicBloodPressure','TricepsThickness','SerumInsulin','BMI','DiabetesPedigree','Age']].values, df['Diabetic'].values
+    X, y = df[['Pregnancies', 'PlasmaGlucose', 'DiastolicBloodPressure', 'TricepsThickness', 
+               'SerumInsulin', 'BMI', 'DiabetesPedigree', 'Age']].values, df['Diabetic'].values
     print(np.unique(y, return_counts=True))
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.30, random_state=0)
-    return X_train, X_test,y_train, y_test
+    return X_train, X_test, y_train, y_test
+
 
 def train_model(reg_rate, X_train, X_test, y_train, y_test):
     # train model
@@ -63,6 +65,7 @@ def parse_args():
 
     # return args
     return args
+
 
 # run script
 if __name__ == "__main__":
