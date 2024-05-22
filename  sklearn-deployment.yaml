@@ -1,10 +1,10 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: sklearn-deployment
-endpoint_name: my-endpoint
+endpoint_name: mslearn_mlops_endpoint
 model:
-  name: mir-sample-sklearn-ncd-model
+  name: mslearn_mlops
   version: 1
-  path: sklearn-diabetes/model
+  path: azureml://locations/southcentralus/workspaces/d9e34f51-f656-433a-b4a7-1fafc1d8b34b/models/mslearn-mlops/versions/1
   type: mlflow_model
 instance_type: Standard_DS3_v2
 instance_count: 1
