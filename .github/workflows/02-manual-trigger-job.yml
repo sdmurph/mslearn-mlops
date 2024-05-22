@@ -55,5 +55,6 @@ jobs:
 
       - name: Register Model and Deploy Endpoint
         run: |
-          az ml model register -n mslearn-mlops --asset-path "${{ secrets.MODEL_URI }}" --workspace-name mslearn-mlops --resource-group SdmRG
-          az ml endpoint create --name mslearn-mlops-endpoint --model mslearn-mlops:1 --workspace-name mslearn-mlops --resource-group SdmRG
+          export ENDPOINT_NAME="mslearn-mlops-endpoint"
+          az ml model create --name mslearn-mlops --type "mlflow_model" --path "${{ secrets.MODEL_URI }}" --workspace-name mslearn-mlops --resource-group SdmRG          
+          az ml online-endpoint create --name $ENDPOINT_NAME -f create-endpoint.yaml --workspace-name mslearn-mlops --resource-group SdmRG
