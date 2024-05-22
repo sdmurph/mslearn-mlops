@@ -1,6 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/managedOnlineDeployment.schema.json
 name: sklearn-deployment
-endpoint_name: mslearn_mlops_endpoint
+endpoint_name: mslearn-mlops-endpoint
 model:
   name: mslearn_mlops
   version: 1
