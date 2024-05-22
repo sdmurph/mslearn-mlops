@@ -45,8 +45,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Azure CLI
-        uses: azure/setup-azure-cli@v1
+      - name: Install az ml extension
+        run: az extension add -n ml -y
 
       - name: Authenticate with Azure
         uses: azure/login@v1
