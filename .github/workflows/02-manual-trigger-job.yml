@@ -8,6 +8,7 @@ on:
 jobs:
   trainindev:
     runs-on: ubuntu-latest
+    environment: Dev
     steps:
     - name: Check out repo
       uses: actions/checkout@main
@@ -22,6 +23,7 @@ jobs:
         az ml job create --file src/job.yml -w mslearn-mlops -g SdmRG
   traininprod:
     runs-on: ubuntu-latest
+    environment: Production
     steps:
     - name: Check out repo
       uses: actions/checkout@main
