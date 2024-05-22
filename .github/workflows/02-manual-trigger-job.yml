@@ -37,3 +37,30 @@ jobs:
     - name: Trigger Azure Machine Learning job
       run: |
         az ml job create --file src/prod_job.yml -w mslearn-mlops -g SdmRG
+  register_and_deploy:
+    runs-on: ubuntu-latest
+    needs: traininprod
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install mlflow azure-ai-ml azure-identity
+
+      - name: Authenticate with Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Register Model and Deploy Endpoint
+        run: |
+          python -m azure.ai.ml.workspace.connect --name mslearn-mlops --resource-group SdmRG --subscription-id 3947ad7f-8d29-4554-84b7-84c33c507afb
+          python -m azure.ai.ml.model.register --name mslearn-mlops --version 1 --workspace-name my_workspace --resource-group my_resource_group --subscription-id 3947ad7f-8d29-4554-84b7-84c33c507afb --model-path "${{ secrets.MODEL_URI }}"
+          python -m azure.ai.ml.endpoint.create --name my_endpoint --workspace-name my_workspace --resource-group my_resource_group --subscription-id 3947ad7f-8d29-4554-84b7-84c33c507afb --model mslearn-mlops:1
