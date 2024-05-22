@@ -33,6 +33,7 @@ def get_csvs_df(path):
     csv_files = glob.glob(f"{path}/*.csv")
     if not csv_files:
         raise RuntimeError(f"No CSV files found in provided data path: {path}")
+    print("We have data")
     return pd.concat((pd.read_csv(f) for f in csv_files), sort=False)
 
 
