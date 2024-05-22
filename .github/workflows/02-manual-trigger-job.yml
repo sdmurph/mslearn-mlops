@@ -42,19 +42,18 @@ jobs:
     runs-on: ubuntu-latest
     needs: traininprod
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    - name: Check out repo
+      uses: actions/checkout@main
+    - name: Install az ml extension
+      run: az extension add -n ml -y
 
-      - name: Install az ml extension
-        run: az extension add -n ml -y
+    - name: Authenticate with Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Authenticate with Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-      - name: Register Model and Deploy Endpoint
-        run: |
-          export ENDPOINT_NAME="mslearn-mlops-endpoint"
-          az ml model create --name mslearn-mlops --type "mlflow_model" --path "${{ secrets.MODEL_URI }}" --workspace-name mslearn-mlops --resource-group SdmRG          
+    - name: Register Model and Deploy Endpoint
+      run: |
+        export ENDPOINT_NAME="mslearn-mlops-endpoint"
+        az ml model create --name mslearn-mlops --type "mlflow_model" --path "${{ secrets.MODEL_URI }}" --workspace-name mslearn-mlops --resource-group SdmRG          
           
