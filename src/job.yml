@@ -9,7 +9,7 @@ inputs:
     type: uri_folder 
     path: azureml:diabetes-dev-folder:1
   reg_rate: 0.01
-environment: mcr.microsoft.com/azureml/openmpi4.1.0-ubuntu20.04:latest
+environment: azureml:basic-env-scikit@latest
 compute: mslearn-mlops-compute-cluster
 experiment_name: mslearn-mlops-exp
 description: This is for mslearn mlops training
